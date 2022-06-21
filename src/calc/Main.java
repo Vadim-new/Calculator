@@ -1,20 +1,22 @@
 package calc;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
-
-        System.out.println("Введите выражение: ");
-        Scanner sc = new Scanner(System.in);
-        String input = sc.nextLine().toUpperCase();   //  считываем строку и переводим все в верхний регистр
-        System.out.println(Main.calc(input));
+    public static void main(String[] args) throws IOException {
+        while (true) {
+            System.out.println("Введите выражение: ");
+            Scanner sc = new Scanner(System.in);
+            String input = sc.nextLine().toUpperCase();   //  считываем строку и переводим все в верхний регистр
+            System.out.println(Main.calc(input));
+        }
 
     }
 
-    public static String calc(String input) {
+    public static String calc(String input) throws IOException {
         int allOperations = 0;  //  кол-во операций в веденном выражении
         int operation = 0;      //  позиция операции в массиве
         String operand1 = "";   //  операнды в строковом формате
@@ -53,8 +55,11 @@ public class Main {
 
         for (int i = 0; i < operations.length; i++) {  //  проходим по массиву операций и смотрим сколько их в полученном выражении
             if (input.indexOf(operations[i]) > 0) {
-                if (input.substring(input.indexOf(operations[i]) + 1, input.length()).indexOf(operations[i]) > 0)
-                    return "Не верное количество операций!";
+                if (input.substring(input.indexOf(operations[i]) + 1, input.length()).indexOf(operations[i]) > 0) {
+
+                        throw new IOException("Не верное количество операций!");
+                }
+
                 allOperations++;         //  считаем кол-во операций в выражении
                 operation = i;           //  запоминаем вид операции
                 operand1 = input.substring(0, input.indexOf(operations[i]));                    //  запоминаем операнды
