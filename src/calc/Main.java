@@ -55,10 +55,8 @@ public class Main {
 
         for (int i = 0; i < operations.length; i++) {  //  проходим по массиву операций и смотрим сколько их в полученном выражении
             if (input.indexOf(operations[i]) > 0) {
-                if (input.substring(input.indexOf(operations[i]) + 1, input.length()).indexOf(operations[i]) > 0) {
-
-                        throw new IOException("Не верное количество операций!");
-                }
+                if (input.substring(input.indexOf(operations[i]) + 1, input.length()).indexOf(operations[i]) > 0)
+                    throw new IOException("Не верное количество операций!");
 
                 allOperations++;         //  считаем кол-во операций в выражении
                 operation = i;           //  запоминаем вид операции
@@ -67,7 +65,7 @@ public class Main {
             }
         }
 
-        if (allOperations != 1) return "Не верное количество операций!";
+        if (allOperations != 1) throw new IOException("Не верное количество операций!");
 
         if (map.get(operand1) != null) {           //  проверяем операнд1 по коллекции соответствий
             number1 = map.get(operand1);           //  если находим, запоминаем его числовое значение
@@ -76,7 +74,7 @@ public class Main {
             try {
                 number1 = Integer.parseInt(operand1);
             } catch (NumberFormatException e) {
-                return "Не верный формат числа";
+                throw new IOException("Не верный формат числа");
             }
         }
 
@@ -87,13 +85,13 @@ public class Main {
             try {
                 number2 = Integer.parseInt(operand2);
             } catch (NumberFormatException e) {
-                return "Не верный формат числа";
+                throw new IOException("Не верный формат числа");
             }
         }
 
-        if (operand1_rim != operand2_rim) return "Нельзя использовать разные системы исчисления!";
-        if (number1 > 10 || number2 > 10) return "Нельзя использовать числа больше 10!";
-        if (operation == 3 && number2 == 0) return "Нельзя делить на ноль!";
+        if (operand1_rim != operand2_rim) throw new IOException("Нельзя использовать разные системы исчисления!");
+        if (number1 > 10 || number2 > 10) throw new IOException( "Нельзя использовать числа больше 10!");
+        if (operation == 3 && number2 == 0) throw new IOException( "Нельзя делить на ноль!");
 
         res = switch (operation) {          //  вычисляем результат
             case 0 -> number1 + number2;
@@ -102,7 +100,7 @@ public class Main {
             case 3 -> number1 / number2;
             default -> 0;
         };
-        if (operand1_rim == 1 && res <= 0) return "Римское значение не может быть меньше 1";
+        if (operand1_rim == 1 && res <= 0) throw new IOException( "Римское значение не может быть меньше 1");
 
         result = res + "";
 
